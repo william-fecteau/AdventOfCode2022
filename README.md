@@ -13,20 +13,20 @@ I created this python AoC framework to handle every basic action that you need t
 - Timing the execution of your program to compare run times
 
 ## Example usage
-- https://github.com/AggroBane/AdventOfCode2020
-- https://github.com/AggroBane/AdventOfCode2021
+- https://github.com/william-fecteau/AdventOfCode2020
+- https://github.com/william-fecteau/AdventOfCode2021
+- https://github.com/william-fecteau/AdventOfCode2022
 
 ## Prerequisites
-This framework was created using ```python 3.8.10```, i did not test with any other version
-
 For it to work, you need to have two packages installed ```requests``` and ```python-dotenv``` which you can install using this command : 
-```pip install requests python-dotenv```
+```pip install -r requirements.txt```
 *Of course you need to have pip installed also*
 
 ## Installation
 1. Clone the repo
-2. Create a ```.env``` file at the root of the repo
-3. In this ```.env``` file, add the two following variables and change their values for your need :
+2. Install the requirements ```pip install -r requirements.txt```
+3. Create a ```.env``` file at the root of the repo
+4. In this ```.env``` file, add the two following variables and change their values for your need :
 ```
 AOC_SESSION_COOKIE=yourSessionCookie
 AOC_YEAR=2021
@@ -42,6 +42,7 @@ from utils.aoc_utils import AOCDay, day
 class DayTemplate(AOCDay):
     def common(self):
         #print(self.inputData)
+        #print(self.rawData)
         return 0
 
     def part1(self):
@@ -50,13 +51,8 @@ class DayTemplate(AOCDay):
     def part2(self):
         return 0
 ```
-*Note: ```self.inputData``` contains the list of every line from your input (Splitted on '\n')*
+*Note: ```self.inputData``` contains the list of every line from your input (Splitted on '\n') and ```self.rawData``` contains all the data in a single string (Including all the '\n')*.
 
-### Start a day 
-Create your day file -> Time for you to program!
-
-### Run a day
-Check if your day was started or else its gonna start it -> Download the input file (if not present) -> Read the input file -> Run the ```common``` function -> Run the ```part1``` function -> Run the ```part2``` function.
 
 ## How to use it
 ### Start a day
