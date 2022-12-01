@@ -1,6 +1,7 @@
 import os
-import time
 import sys
+import time
+
 import requests
 
 
@@ -10,6 +11,7 @@ def day(dayNumber):
         return cls
     return day_decorator
 
+
 class AOCDay:
     year = 2020
     dayNumber = 0
@@ -17,7 +19,6 @@ class AOCDay:
     outputFilename = ""
     sessionToken = ""
     inputData = None
-
 
     def __init__(self, year, dayNumber, sessionToken):
         self.year = int(year)
@@ -51,7 +52,7 @@ class AOCDay:
         startTime = time.time()
         answer1 = self.part1()
         time1 = time.time() - startTime
-        
+
         # Part 2
         startTime = time.time()
         answer2 = self.part2()
@@ -61,7 +62,8 @@ class AOCDay:
 
         # Writing output
         self.writeOutput(
-            "====================== Day" + str(self.dayNumber) + " ======================",
+            "====================== Day" +
+            str(self.dayNumber) + " ======================",
             "Common time (ms) : " + str(time0),
             "---------------------------------------------------",
             "Part 1 : " + str(answer1),
@@ -73,15 +75,15 @@ class AOCDay:
             "Total time (ms): " + str(totalTime)
         )
 
-
     def downloadInput(self):
         # If file already exists, only read it
-        if os.path.exists(self.inputPath): 
+        if os.path.exists(self.inputPath):
             self.readInput()
             return
 
         # Else download it
-        url = "https://adventofcode.com/" + str(self.year) + "/day/" + str(self.dayNumber) + "/input"
+        url = "https://adventofcode.com/" + \
+            str(self.year) + "/day/" + str(self.dayNumber) + "/input"
         result = requests.get(url, cookies={'session': self.sessionToken})
         if result.status_code == 200:
             with open(self.inputPath, 'w') as f:
@@ -90,12 +92,13 @@ class AOCDay:
             raise ConnectionError("Could not connect to AoC website to download input data. "
                                   "Error code {}: {}".format(result.status_code, result.text))
 
-
     def readInput(self):
         self.inputData = []
 
         # Opening filestream
         file = open(self.inputPath, "r")
+
+        self.rawData = "".join(file.readlines())
 
         # Reading and appending each line to the inputData
         for line in file:
@@ -118,7 +121,7 @@ class AOCDay:
         file = open(self.outputPath, "w")
         file.write(strToWrite)
         file.close()
-    
+
     def common(self):
         pass
 
@@ -127,8 +130,6 @@ class AOCDay:
 
     def part2(self):
         pass
-
-
 
 
 class AOCDays:

@@ -4,18 +4,8 @@ from utils.aoc_utils import AOCDay, day
 @day(1)
 class Day1(AOCDay):
     def common(self):
-        self.elves = []
-        self.currentElve = []
-        for line in self.inputData:
-            if (line == ""):
-                self.elves.append(self.currentElve)
-                self.currentElve = []
-                continue
-
-            self.currentElve.append(int(line))
-
-        self.elveSums = list(map(lambda x: sum(x), self.elves))
-        return 0
+        self.elveSums = [sum(map(int, calorie.split()))
+                         for calorie in self.rawData.split('\n\n')]
 
     def part1(self):
         return max(self.elveSums)
