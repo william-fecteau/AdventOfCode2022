@@ -100,10 +100,9 @@ class AOCDay:
 
         self.rawData = "".join(file.readlines())
 
-        # Reading and appending each line to the inputData
-        for line in file:
-            line = line.replace('\n', '')
-            self.inputData.append(line)
+        self.inputData = self.rawData.split("\n")
+        if (len(self.inputData[len(self.inputData)-1]) == 0):
+            self.inputData = self.inputData[:-1]
 
         # Closing filestream
         file.close()
