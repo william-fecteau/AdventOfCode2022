@@ -1,16 +1,15 @@
-import sys
 import os
 import shutil
+import sys
 
 from dotenv import load_dotenv
 
 from days import *
 from utils.aoc_utils import AOCDay, AOCDays
 
-
 if __name__ == "__main__":
     load_dotenv()  # take environment variables from .env.
-    
+
     year = os.getenv('AOC_YEAR')
     sessionToken = os.getenv('AOC_SESSION_COOKIE')
 
@@ -41,11 +40,12 @@ if __name__ == "__main__":
     elif not os.path.exists(os.getcwd() + relPath):
         # Copying template file
         shutil.copy(os.getcwd() + "/days/_template.py", os.getcwd() + relPath)
-        
+
         # Renaming template
         fin = open(os.getcwd() + relPath, "rt")
         data = fin.read()
-        data = data.replace("@day(0)", "@day(" + str(dayNumber) + ")").replace("DayTemplate", "Day" + str(dayNumber))
+        data = data.replace("@day(0)", "@day(" + str(dayNumber) +
+                            ")").replace("DayTemplate", "Day" + str(dayNumber))
         fin.close()
 
         # Overriding day file
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         fin.write(data)
         fin.close()
 
-        print("Day "+ str(dayNumber) + " created! glhf")
+        print("Day " + str(dayNumber) + " created! glhf")
 
     # Else we run it normally
     else:
@@ -61,15 +61,13 @@ if __name__ == "__main__":
             daysRun = [x+1 for x in range(25)]
         else:
             daysRun = [dayNumber]
-    
 
         for dayNum in daysRun:
             # Getting the good days instance
-            curDay : AOCDay = AOCDays.getInstance().getDay(dayNum)
-            
+            curDay: AOCDay = AOCDays.getInstance().getDay(dayNum)
+
             try:
                 inst = curDay(year, dayNum, sessionToken)
                 inst.run()
             except Exception as e:
-                print(e, file=sys.stderr)
-                sys.exit(1)
+                raise e
