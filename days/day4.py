@@ -13,10 +13,7 @@ class Day4(AOCDay):
         return (a <= c and b >= d) or (c <= a and d >= b)
 
     def isOverlapping(self, a, b, c, d):
-        r1 = range(a, b + 1)
-        r2 = range(c, d + 1)
-
-        return len(set(r1).intersection(set(r2))) > 0
+        return (a <= c and b >= c) or (c <= a and d >= a)
 
     def part1(self):
         return sum(map(lambda x: self.isFullyContained(*x[0], *x[1]), self.pairs))
