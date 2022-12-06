@@ -9,7 +9,7 @@
       "type": "python",
       "request": "launch",
       "program": "./main.py",
-      "args": ["5"],
+      "args": ["6"],
       "console": "integratedTerminal",
       "justMyCode": true
     }
