@@ -12,6 +12,18 @@ def day(dayNumber):
     return day_decorator
 
 
+def downloadInput(dayNum, year, sessionToken, inputPath):
+    url = "https://adventofcode.com/" + \
+        str(year) + "/day/" + str(dayNum) + "/input"
+    result = requests.get(url, cookies={'session': sessionToken})
+    if result.status_code == 200:
+        with open(inputPath, 'w') as f:
+            f.write(result.text)
+    else:
+        raise ConnectionError("Could not connect to AoC website to download input data. "
+                              "Error code {}: {}".format(result.status_code, result.text))
+
+
 class AOCDay:
     year = 2020
     dayNumber = 0
@@ -81,28 +93,19 @@ class AOCDay:
             self.readInput()
             return
 
-        # Else download it
-        url = "https://adventofcode.com/" + \
-            str(self.year) + "/day/" + str(self.dayNumber) + "/input"
-        result = requests.get(url, cookies={'session': self.sessionToken})
-        if result.status_code == 200:
-            with open(self.inputPath, 'w') as f:
-                f.write(result.text)
-        else:
-            raise ConnectionError("Could not connect to AoC website to download input data. "
-                                  "Error code {}: {}".format(result.status_code, result.text))
+        downloadInput(self.dayNumber, self.year,
+                      self.sessionToken, self.inputPath)
 
     def readInput(self):
-        self.inputData = []
 
         # Opening filestream
         file = open(self.inputPath, "r")
 
         self.rawData = "".join(file.readlines())
+        while self.rawData.endswith("\n"):
+            self.rawData = self.rawData[:-1]
 
         self.inputData = self.rawData.split("\n")
-        if (len(self.inputData[len(self.inputData)-1]) == 0):
-            self.inputData = self.inputData[:-1]
 
         # Closing filestream
         file.close()

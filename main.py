@@ -5,7 +5,7 @@ import sys
 from dotenv import load_dotenv
 
 from days import *
-from utils.aoc_utils import AOCDay, AOCDays
+from utils.aoc_utils import AOCDay, AOCDays, downloadInput
 
 if __name__ == "__main__":
     load_dotenv()  # take environment variables from .env.
@@ -53,10 +53,15 @@ if __name__ == "__main__":
         fin.write(data)
         fin.close()
 
-        print("Day " + str(dayNumber) + " created! glhf")
+        inputPath = os.getcwd() + "/inputs"
+        if not os.path.exists(inputPath):
+            os.makedirs(inputPath)
+        inputPath += "/" + f"day{dayNumber}.txt"
+        downloadInput(dayNumber, year, sessionToken, inputPath)
 
-    # Else we run it normally
+        print("Day " + str(dayNumber) + " created! glhf")
     else:
+        # Running the day
         if runAll:
             daysRun = [x+1 for x in range(25)]
         else:
