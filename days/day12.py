@@ -69,9 +69,6 @@ class Day12(AOCDay):
 
                 self.adjencencyList.append(curNodeNeighbours)
 
-        # for i, l in enumerate(self.adjencencyList):
-        #     print(f"{i} = {list(map(self.nodeToPos, l))}", sep=',')
-
         self.graph = Graph(self.adjencencyList)
 
     def posToNodeNum(self, pos):
@@ -99,8 +96,19 @@ class Day12(AOCDay):
     def part1(self):
         shortestPath = self.graph.getShortestPath(
             self.posToNodeNum(self.startPos), self.posToNodeNum(self.endPos))
-        self.printPath(shortestPath)
+        # self.printPath(shortestPath)
         return len(shortestPath) - 1
 
     def part2(self):
-        return 0
+        startingPoints = [(i, j) for i in range(self.nbRows) for j in range(
+            self.nbCols) if self.heightMap[i][j] == ord('a')]
+
+        shortestPath = INFINITY
+        for startingPos in startingPoints:
+            path = self.graph.getShortestPath(self.posToNodeNum(
+                startingPos), self.posToNodeNum(self.endPos))
+            steps = len(path) - 1
+            if steps != 0 and steps < shortestPath:
+                shortestPath = steps
+
+        return shortestPath
